@@ -1,6 +1,6 @@
-require 'rack/ssl'
+#require 'rack/ssl'
 require 'httparty'
-require 'jawbone'
+#require 'jawbone'
 require 'csv'
 require 'json'
 require 'sinatra'
@@ -10,7 +10,7 @@ configure do
   set :base_url, "http://cdn.newsapi.com.au/content/v2/"
   set :api_key, "f2qtvndyfh4ensub44utdwtf"
   enable :sessions
-  use Rack::SSL
+  #use Rack::SSL
 end
 
 get '/' do
