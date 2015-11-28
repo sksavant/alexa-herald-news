@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Infopal</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- Bootstrap -->
+		<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+		<![endif]-->
+    <style>
+      body {
+        padding-top: 60px;
+      }
+    </style>
+	</head>
+	<body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/"> Infopal </a>
+          <!--
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li><a href="/jawbone/login">Login to UP</a></li>
+              <li><a href="/jawbone/data">UP data</a></li>
+
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown">Library <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/artists/add">Add Artist</a></li>
+                  <li><a href="/artists/drop">Drop Artist</a></li>
+                  <li><a href="/songs/add">Add Song</a></li>
+                  <li><a href="/songs/drop">Drop Song</a></li>
+                  <li><a href="/genres">Add Genre</a></li>
+                </ul>
+              </li>
+              <li><a href="/random">Shuffle</a></li>
+
+            </ul>
+            -->
+<!--
+            <form class="navbar-search" action="/search" method="GET">
+              <input type="text" class="search-query span4" placeholder="Search" name="search">
+            </form>
+-->
+          </div><!-- /.nav-collapse -->
+        </div><!-- /.container -->
+      </div><!-- /.navbar-inner -->
+    </div><!-- /.navbar -->
+
+    <div class="container-fluid">
+      <div class="cold-md-4 text-center center-block">
+
+        <%= yield %>
+
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/vendor/jquery-1.11.3.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>
