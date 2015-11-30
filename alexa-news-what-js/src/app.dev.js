@@ -18,12 +18,18 @@ collections["afl"] = "c3799e92f40ec3b728ecc2f35764d48a";
 collections["world"] = "4fa837274afa25bed9e73fcbfd90d3a5";
 collections["business"] = "926df23bf2102389524f99f2282fe458";
 collections["technology"] = "9035b9b871a198a4f9574ddaa13e20e6";
-collections["entertainment"] = "b84832220a15a2176d46d1162b76fb89";
+collections["entertainment"] = "beac0367dabc5ab78f3836202061e6e2";
 collections["national"] = "fc12325e631cc05ec4074ab2189bc56a";
 collections["local"] = "64a05c1eb2ddedeff03d0ac035aa6100";
 collections["lifestyle"] = "3503da4ab53909af011023ea4c71581e";
 collections["cricket"] = "083802726d09dd42d5e17f9180d328b2";
 collections["fashion"] = "754d21530dbccc1d4d0669104c58eb08";
+
+var stories = {};
+stories["business"] = ["ebd3b3652b8b0e90db5325a42655ff3a","eff0dbc3861d3f744b175df6fbdfd2ce","083905c367a4825cff84e95ffafd3ac2"];
+stories["local"] = ["fe435e9215122e12574ed463fa0869b0", "6ffe9f2a577d9b4a8edd1a72a5a2d65b"];
+stories["entertainment"] = ["5f67d1ec21a3ade6a9200bc253bfd8d8", "d15dae998231e335bebf20b10ccb4e0b"];
+stories["world"] = ["bdb98827154546ac7a3ac851fcea55b0", "df1dbb6eea6686642e2d3f6078d7cd93"];
 
 exports.handler = function (event, context) {
     try {
@@ -127,16 +133,37 @@ function onIntent(intentRequest, session, callback) {
 
             var repromptText="Should I continue?";
             var shouldEndSession = false;
-            num = Math.floor((Math.random() * sessionAttributes[category].length));
-            article = sessionAttributes[category].splice(num, 1)[0];
+            if (sessionAttributes[category].length !== 0){
+                console.log("At "+sessionAttributes[category]);
+                num = Math.floor((Math.random() * sessionAttributes[category].length));
+                article = sessionAttributes[category].splice(num, 1)[0];
+            }
+            else
+            {
+                article = null;
+            }
             //speechOutput += '<break time="1s"/>'
             //console.log('Article',article);
-            speechOutput += article["title"] +". ";
-            //speechOutput += '<break time="1s"/>'
-            speechOutput += article["description"];
-            speechOutput += "Should I read more news?";
-            callback(sessionAttributes,
-               buildSpeechletResponse(intent.name, speechOutput, repromptText, shouldEndSession));
+            if (article === null){
+                getJSONStory(category, function(a){
+                    article = a;
+                    speechOutput += article["title"] +". ";
+                    //speechOutput += '<break time="1s"/>'
+                    speechOutput += article["description"];
+                    speechOutput += "Should I read more news?";
+                    callback(sessionAttributes,
+                       buildSpeechletResponse(intent.name, speechOutput, repromptText, shouldEndSession));
+                });
+            }
+            else
+            {
+                speechOutput += article["title"] +". ";
+                //speechOutput += '<break time="1s"/>'
+                speechOutput += article["description"];
+                speechOutput += "Should I read more news?";
+                callback(sessionAttributes,
+                   buildSpeechletResponse(intent.name, speechOutput, repromptText, shouldEndSession));
+            }
           });
         }
         else{
@@ -201,8 +228,8 @@ function onIntent(intentRequest, session, callback) {
     else if ("EmailNews" === intentName) {
         console.log("Email")
         var person = intent.slots.Person.value;
-        var speechOutput =  "All done. So, Want more news? I can go on forever and ever and ever.";// By the way, You should probably call "+ person;
-        var repromptText="Do you want to hear more news?";
+        var speechOutput =  "All done.";// By the way, You should probably call "+ person;
+        var repromptText="So, Want more news? I can go on forever and ever and ever..";
         var shouldEndSession = false;
         sessionAttributes = session.attributes;
         callback(sessionAttributes,
@@ -222,7 +249,31 @@ function onIntent(intentRequest, session, callback) {
     console.log("The end")
 }
 
-
+function getJSONStory(category, callback){
+    if (stories.hasOwnProperty(category.toLowerCase())){
+        var story_id = stories[category.toLowerCase()]
+    }
+    var req = http.get("http://128.199.213.139:8001/story.json?id="+story_id, function(res) {
+      var body = '';
+      console.log('Status:', res.statusCode);
+      console.log('Headers:', JSON.stringify(res.headers));
+      res.setEncoding('utf8');
+      res.on('data', function(chunk) {
+          body += chunk;
+      });
+      res.on('end', function() {
+          console.log('Successfully processed HTTPS response');
+          // If we know it's JSON, parse it
+          if (res.headers['content-type'] === 'application/json') {
+              var news = JSON.parse(body);
+          }
+          var news = JSON.parse(body);
+          console.log('Got '+news.length+' articles');
+          console.log("Story: "+news);
+          callback(news)
+      });
+    });
+}
 
 function getJSONNewsForCategory(category, callback){
     cat_id = collections[category.toLowerCase()];
@@ -230,7 +281,7 @@ function getJSONNewsForCategory(category, callback){
         cat_id = collections["world"];
     }
     console.log("CAT "+category+ ":"+category.toLowerCase()+" "+cat_id);
-    var req = http.get("http://128.199.213.139:8001/collection.json?num=20&id="+cat_id, function(res) {
+    var req = http.get("http://128.199.213.139:8001/collection.json?num=5&id="+cat_id, function(res) {
       var body = '';
       console.log('Status:', res.statusCode);
       console.log('Headers:', JSON.stringify(res.headers));
