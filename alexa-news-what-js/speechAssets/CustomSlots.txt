@@ -1,0 +1,18 @@
+LIST_OF_CATS
+Top Stories
+A F L
+World
+Business
+Technology
+Entertainment
+National
+Local
+Lifestyle
+Cricket
+Fashion
+
+LIST_OF_PERSONS
+mum
+Mother
+Me
+mom

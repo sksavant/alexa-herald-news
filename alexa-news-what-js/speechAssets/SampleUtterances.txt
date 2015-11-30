@@ -1,0 +1,30 @@
+GetNews what is the news
+GetNews news
+GetNews read me news
+GetNews surprise me
+GetNews yes
+
+NewsCat news about {Category}
+NewsCat news from {Category}
+NewsCat news on {Category}
+NewsCat news regarding {Category}
+
+NewsCat {Category} news
+NewsCat {Category} news please
+NewsCat {Category}
+NewsCat I would like to listen to {Category}
+NewsCat I would like to listen to {Category} news
+NewsCat I would like {Category} news
+NewsCat I would like {Category}
+NewsCat I want {Category} news
+
+StopNews no
+StopNews no thanks
+StopNews stop please
+StopNews stop
+
+EmailNews email this to {Person}
+EmailNews email this to my {Person}
+EmailNews email my {Person}
+EmailNews email it to {Person}
+EmailNews email {Person}

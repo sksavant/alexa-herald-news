@@ -1,0 +1,28 @@
+{
+  "intents": [
+    {
+      "intent": "GetNews"
+    },
+    {
+      "intent": "StopNews"
+    },
+    {
+      "intent": "EmailNews",
+      "slots": [
+        {
+          "name": "Person",
+          "type": "LIST_OF_PERSONS"
+        }
+   	   ]
+    },
+    {
+      "intent": "NewsCat",
+      "slots": [
+        {
+          "name": "Category",
+          "type": "LIST_OF_CATS"
+        }
+   	   ]
+    }
+  ]
+}
